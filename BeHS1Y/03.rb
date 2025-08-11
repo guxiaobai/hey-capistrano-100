@@ -1,6 +1,6 @@
 
-# uncomment_lines 'Capfile', /require.*assets/
-# uncomment_lines 'Capfile', /require.*migrations/
+uncomment_lines 'Capfile', /require.*assets/
+uncomment_lines 'Capfile', /require.*migrations/
 
 
 
