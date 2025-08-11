@@ -1,0 +1,66 @@
+---
+- hosts: all
+  become: yes
+  vars:
+    app_user: guxiaobai
+    deploy_to: /var/www/heyfong-crm
+  pre_tasks:
+    - apt: update_cache=true cache_valid_time=3600
+
+  tasks:
+    - name: allow sudo group to have passwordless sudo
+      lineinfile:
+        dest: /etc/sudoers
+        regexp: "^%sudo"
+        line: "%sudo   ALL=(ALL:ALL) NOPASSWD: ALL"
+        state: present
+        validate: 'visudo -cf %s'
+
+    - name: create app deploy user
+      user:
+        name: "{{ app_user | mandatory }}"
+        shell: /bin/bash
+        state: present
+        append: yes
+        groups: sudo
+
+    - name: Authorized key
+      ansible.posix.authorized_key:
+        user: "{{ app_user }}"
+        key: "{{ item }}"
+        state: present
+      with_items:
+        - https://github.com/guxiaobai.keys
+
+    - name: Create project directory
+      file:
+        path: "{{ deploy_to | mandatory }}/shared"
+        state: directory
+        recurse: yes
+        owner: "{{ app_user }}"
+        group: "{{ app_user }}"
+        mode: '0755'
+
+    - name: .rbenv-vars
+      file: 
+        path: "{{ deploy_to | mandatory }}/shared/.rbenv-vars"
+        state: touch
+        owner: "{{ app_user }}"
+        group: "{{ app_user }}"
+        mode: '0644'
+
+    - name: Runtime Environment
+      lineinfile:
+        dest: "{{ deploy_to }}/shared/.rbenv-vars"
+        regexp: "{{ item.regexp}}"
+        line: "{{ item.line }}"
+      with_items:
+        # - { regexp: '^LC_ALL', line: 'LC_ALL=en_US.UTF-8' }
+        - { regexp: '^RAILS_ENV', line: 'RAILS_ENV=production' }
+        # - { regexp: '^RAILS_MASTER_KEY', line: 'RAILS_MASTER_KEY=047860d63fa29d9320512ac13eb6f697' }
+        # - { regexp: '^YUNCANG_API_DATABASE_HOST', line: 'YUNCANG_API_DATABASE_HOST=127.0.0.1' }
+        # - { regexp: '^YUNCANG_API_DATABASE_USERNAME', line: 'YUNCANG_API_DATABASE_USERNAME={{ mysql_user_name }}' }
+        # - { regexp: '^YUNCANG_API_DATABASE_PASSWORD', line: 'YUNCANG_API_DATABASE_PASSWORD={{ mysql_user_password }}' }
+        # - { regexp: '^YUNCANG_API_WECHAT_APPID', line: 'YUNCANG_API_WECHAT_APPID=wxfed6f8146d1736ff' }
+        # - { regexp: '^YUNCANG_API_WECHAT_SECRET', line: 'YUNCANG_API_WECHAT_SECRET=0acf58bacdbe1cdeb18587d9d9d9dd35' }
+        # - { regexp: '^YUNCANG_API_ALIYUN_OSS', line: 'YUNCANG_API_ALIYUN_OSS=https://cdn.lv10087.com' }
