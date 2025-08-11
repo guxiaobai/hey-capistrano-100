@@ -15,3 +15,5 @@ append_to_file 'config/deploy.rb' do
   EOS
 end
 
+
+append :linked_files, ".rbenv-vars"
