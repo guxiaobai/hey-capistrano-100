@@ -57,7 +57,7 @@
       with_items:
         # - { regexp: '^LC_ALL', line: 'LC_ALL=en_US.UTF-8' }
         - { regexp: '^RAILS_ENV', line: 'RAILS_ENV=production' }
-        # - { regexp: '^RAILS_MASTER_KEY', line: 'RAILS_MASTER_KEY=047860d63fa29d9320512ac13eb6f697' }
+        - { regexp: '^RAILS_MASTER_KEY', line: 'RAILS_MASTER_KEY=e56c5ab481f3dbf38d4c180d2383a3cd' }
         # - { regexp: '^YUNCANG_API_DATABASE_HOST', line: 'YUNCANG_API_DATABASE_HOST=127.0.0.1' }
         # - { regexp: '^YUNCANG_API_DATABASE_USERNAME', line: 'YUNCANG_API_DATABASE_USERNAME={{ mysql_user_name }}' }
         # - { regexp: '^YUNCANG_API_DATABASE_PASSWORD', line: 'YUNCANG_API_DATABASE_PASSWORD={{ mysql_user_password }}' }
