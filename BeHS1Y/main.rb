@@ -14,20 +14,20 @@ user    = ask('user: ')
 repo    = ask('repository: ')
 
 # Capistrano
-# 分支
-uncomment_lines 'config/deploy.rb', /ask\s+:branch/
-
-# 项目名称
+# 01 - 项目名称
 # @TODO: heyfong-crm / heyfong_crm(错误)
 gsub_file 'config/deploy.rb', /(set\s+:application,).*/, "\\1 '#{app_name}'"
 
-# 仓库地址
+# 02 - 仓库地址
 gsub_file 'config/deploy.rb', /(set\s+:repo_url,).*/, "\\1 '#{repo}'"
 
-# 项目地址
+# 03 - 分支
+uncomment_lines 'config/deploy.rb', /ask\s+:branch/
+
+# 04 - 项目路径
 gsub_file 'config/deploy.rb', /(#\s+)(set\s+:deploy_to,).*/, '\2 "/var/www/#{fetch(:application)}"'
 
-# 服务器
+# 05 - 服务器
 prepend_to_file 'config/deploy/production.rb' do
 "server '#{domain}', user: '#{user}', roles: %w{app db web}"
 end
@@ -40,7 +40,9 @@ append_to_file 'config/deploy.rb' do
 
   # rbenv
   set :rbenv_type, :user
-  set :rbenv_ruby, '3.3.8'
+  # set :rbenv_ruby, '3.3.8'
+  set :rbenv_ruby, File.read('.ruby-version').strip
+
   append :linked_files, ".rbenv-vars"
   EOS
 end
