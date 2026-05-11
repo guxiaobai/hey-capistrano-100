@@ -1,7 +1,7 @@
 gem_group :development do
   gem 'capistrano-rails', '~> 1.7'
   gem 'capistrano-rbenv', '~> 2.2'
-  gem 'capistrano3-puma', '~> 6.2'
+  gem 'capistrano3-puma', '~> 8.0'
 end
 
 run_bundle

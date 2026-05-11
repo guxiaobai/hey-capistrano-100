@@ -5,9 +5,6 @@ ansible app -a "uptime"
 ```
 
 
-```bash
-ansible-galaxy install -r requirements.yml
-```
 
 > rbenv
 
