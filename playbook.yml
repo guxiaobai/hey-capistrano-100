@@ -28,13 +28,13 @@
         dest: "{{ deploy_to }}/shared/.rbenv-vars"
         regexp: "{{ item.regexp}}"
         line: "{{ item.line }}"
-      with_items:
+      loop:
         - { regexp: '^LC_ALL', line: 'LC_ALL=en_US.UTF-8' }
         - { regexp: '^RAILS_ENV', line: 'RAILS_ENV=production' }
         - { regexp: '^RAILS_MASTER_KEY', line: 'RAILS_MASTER_KEY=88e891ff35ab506931895c2607cf0ab4' }
-    #     # - { regexp: '^HEYFONG_CRM_DATABASE_HOST', line: 'HEYFONG_CRM_DATABASE_HOST=127.0.0.1' }
-    #     # - { regexp: '^HEYFONG_CRM_DATABASE_USERNAME', line: 'HEYFONG_CRM_DATABASE_USERNAME=heyfong' }
-    #     # - { regexp: '^HEYFONG_CRM_DATABASE_PASSWORD', line: "HEYFONG_CRM_DATABASE_PASSWORD='@Abc123'" }
+        - { regexp: '^HEYFONG_CRM_DATABASE_HOST', line: 'HEYFONG_CRM_DATABASE_HOST=127.0.0.1' }
+        - { regexp: '^HEYFONG_CRM_DATABASE_USERNAME', line: 'HEYFONG_CRM_DATABASE_USERNAME=heyfong' }
+        - { regexp: '^HEYFONG_CRM_DATABASE_PASSWORD', line: "HEYFONG_CRM_DATABASE_PASSWORD='@Abc123'" }
     #     # - { regexp: '^YUNCANG_API_WECHAT_APPID', line: 'YUNCANG_API_WECHAT_APPID=wxfed6f8146d1736ff' }
     #     # - { regexp: '^YUNCANG_API_WECHAT_SECRET', line: 'YUNCANG_API_WECHAT_SECRET=0acf58bacdbe1cdeb18587d9d9d9dd35' }
     #     # - { regexp: '^YUNCANG_API_ALIYUN_OSS', line: 'YUNCANG_API_ALIYUN_OSS=https://cdn.lv10087.com' }

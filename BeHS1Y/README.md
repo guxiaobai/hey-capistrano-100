@@ -1,15 +1,18 @@
 # Capistrano
 
-```bash
-cap production puma:install
-```
+
 
 
 # Capistrano::Puma
 
-```bash
-# ~/.config/systemd/user/
 
+```bash
+cap production puma:install
+```
+
+> `~/.config/systemd/user/`
+
+```bash
 /bin/systemctl --user daemon-reload
 /bin/systemctl --user enable equestia-api
 /bin/systemctl --user enable equestia-api.socket
